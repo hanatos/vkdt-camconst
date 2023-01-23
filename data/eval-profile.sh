@@ -24,7 +24,10 @@ set cbrange [0:10]
 set multiplot
 set xrange [0:1]
 set yrange [0:1]
-rgb(r,g,b) = int(r*256)*65536 + int(g*256)*256 + int(b*256)
+min(a,b) = (a < b) ? a : b
+max(a,b) = (a > b) ? a : b
+clamp(x,a,b) = min(b, max(a, x))
+rgb(r,g,b) = int(clamp(r*256,0,255))*65536 + int(clamp(g*256,0,255))*256 + int(clamp(b*256,0,255))
 plot "${model}-gamut.dat" u 1:2:(rgb(\$3,\$4,\$5)) w p pt 5 ps 1 lc rgb variable
 plot "${model}-eval.dat" u 3:4:2 w p pt 7 ps 7 palette
 set palette gray
